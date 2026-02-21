@@ -33,11 +33,27 @@ export default function Home() {
             <input type="password" placeholder="••••••••" style={{width:'100%',background:'#f0f4ff',border:'1.5px solid #dde3f5',borderRadius:12,fontSize:15,padding:'13px 14px',outline:'none',fontFamily:'sans-serif'}}/>
           </div>
           <button onClick={()=>setLoggedIn(true)} style={{width:'100%',padding:15,borderRadius:14,border:'none',background:'#2563eb',color:'#fff',fontSize:15,fontWeight:700,cursor:'pointer'}}>Sign In</button>
-          <p style={{textAlign:'center',fontSize:13,color:'#9397b0',marginTop:16}}>First time? <span onClick={()=>setLoggedIn(true)} style={{color:'#2563eb',fontWeight:700,cursor:'pointer'}}>Set up your account →</span></p>
+          <p style={{textAlign:'center',fontSize:13,color:'#9397b0',marginTop:16}}>First time? <span onClick={()=>setLoggedIn(true)} style={{color:'#2563eb',fontWeight:700,cursor:'pointer'}}>Set up your account</span></p>
         </div>
       </div>
     );
   }
+
+  const tabs = [
+    {id:'dashboard',label:'Dashboard',path:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z'},
+    {id:'settings',label:'Settings',path:'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'},
+    {id:'alerts',label:'Alerts',path:'M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0'},
+  ];
+
+  const meals = [
+    {icon:'🍕',name:'Pizza Hut',date:'Aug 1, Wednesday',amount:45,big:false},
+    {icon:'🍣',name:'Sushi Bar',date:'Aug 2, Thursday',amount:88,big:true},
+    {icon:'🥗',name:'Green Bowl',date:'Jul 31, Tuesday',amount:32,big:false},
+    {icon:'🍔',name:'Burger Brothers',date:'Jul 30, Monday',amount:55,big:false},
+    {icon:'🌮',name:'Taco House',date:'Jul 29, Sunday',amount:41,big:false},
+    {icon:'🍜',name:'Noodle Bar',date:'Jul 28, Thursday',amount:38,big:false},
+    {icon:'🥙',name:'Shawarma King',date:'Jul 27, Wednesday',amount:29,big:false},
+  ];
 
   return (
     <div style={{background:'#f0f4ff',minHeight:'100vh',maxWidth:430,margin:'0 auto',fontFamily:'sans-serif'}}>
@@ -52,52 +68,64 @@ export default function Home() {
             <div style={{width:42,height:42,borderRadius:'50%',background:'linear-gradient(135deg,#2563eb,#818cf8)',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:900,fontSize:16,color:'#fff'}}>R</div>
           </div>
 
-          <div style={{position:'relative',borderRadius:22,padding:3,marginBottom:14,background:'linear-gradient(135deg,#2563eb,#7c3aed,#db2777,#f59e0b,#10b981)'}}>
+          <div style={{borderRadius:22,padding:3,marginBottom:14,background:'linear-gradient(135deg,#2563eb,#7c3aed,#db2777,#f59e0b,#10b981)'}}>
             <div style={{background:'#fff',borderRadius:20,padding:'24px 16px',textAlign:'center'}}>
               <div style={{display:'inline-block',background:'#fef0f3',border:'1px solid #f5c2cc',borderRadius:99,padding:'4px 14px',fontSize:11,fontWeight:800,color:'#e03151',textTransform:'uppercase',letterSpacing:'0.09em',marginBottom:14}}>Action required today</div>
               <div style={{fontWeight:900,fontSize:64,color:'#e03151',lineHeight:1,marginBottom:10}}>&#8362; 90</div>
-              <div style={{fontSize:14,color:'#4a4f6a',lineHeight:1.6}}>You must spend this on your <strong>Cibus</strong> card today — or the budget will be lost!</div>
+              <div style={{fontSize:14,color:'#4a4f6a',lineHeight:1.6}}>You must spend this on your <strong>Cibus</strong> card today or the budget will be lost!</div>
             </div>
           </div>
 
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:14}}>
-            {([['Monthly balance','&#8362; 329','of &#8362; 900 total','#2563eb'],['Resets on','Aug 17','11 working days left','#1a1d2e'],['Spend today','&#8362; 90','or it will be gone','#e03151'],['Daily limit','&#8362; 90','max allowed','#1a1d2e']] as string[][]).map(([label,val,sub,color],i)=>(
+            {[
+              {label:'Monthly balance',val:'329',sub:'of 900 total',color:'#2563eb'},
+              {label:'Resets on',val:'Aug 17',sub:'11 working days left',color:'#1a1d2e'},
+              {label:'Spend today',val:'90',sub:'or it will be gone',color:'#e03151'},
+              {label:'Daily limit',val:'90',sub:'max allowed',color:'#1a1d2e'},
+            ].map((s,i)=>(
               <div key={i} style={{background:'#fff',border:'1px solid #dde3f5',borderRadius:16,padding:16,boxShadow:'0 2px 16px rgba(37,99,235,0.08)'}}>
-                <div style={{fontSize:11,fontWeight:700,color:'#9397b0',textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:8}}>{label}</div>
-                <div style={{fontWeight:900,fontSize:26,color,lineHeight:1}} dangerouslySetInnerHTML={{__html:val}}/>
-                <div style={{fontSize:11,color:'#9397b0',marginTop:4}}>{sub}</div>
+                <div style={{fontSize:11,fontWeight:700,color:'#9397b0',textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:8}}>{s.label}</div>
+                <div style={{fontWeight:900,fontSize:26,color:s.color,lineHeight:1}}>{i===0||i===2 ? `\u20AA ${s.val}` : s.val}</div>
+                <div style={{fontSize:11,color:'#9397b0',marginTop:4}}>{s.sub}</div>
               </div>
             ))}
           </div>
 
           <div style={{background:'#fff',border:'1px solid #dde3f5',borderRadius:18,padding:18,boxShadow:'0 2px 16px rgba(37,99,235,0.08)',marginBottom:14}}>
             <div style={{fontSize:14,fontWeight:700,marginBottom:10}}>Monthly usage</div>
-            <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#9397b0',fontWeight:600,marginBottom:8}}><span>&#8362; 571 spent</span><span>63%</span></div>
-            <div style={{height:10,background:'#f0f4ff',borderRadius:99,overflow:'hidden',border:'1px solid #dde3f5'}}><div style={{width:'63%',height:'100%',borderRadius:99,background:'linear-gradient(90deg,#2563eb,#818cf8)'}}></div></div>
-            <div style={{display:'flex',justifyContent:'space-between',fontSize:12,fontWeight:600,marginTop:6}}><span style={{color:'#1daa6e'}}>&#8362; 329 remaining</span><span style={{color:'#9397b0'}}>&#8362; 900 budget</span></div>
+            <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#9397b0',fontWeight:600,marginBottom:8}}>
+              <span>&#8362; 571 spent</span><span>63%</span>
+            </div>
+            <div style={{height:10,background:'#f0f4ff',borderRadius:99,overflow:'hidden',border:'1px solid #dde3f5'}}>
+              <div style={{width:'63%',height:'100%',borderRadius:99,background:'linear-gradient(90deg,#2563eb,#818cf8)'}}></div>
+            </div>
+            <div style={{display:'flex',justifyContent:'space-between',fontSize:12,fontWeight:600,marginTop:6}}>
+              <span style={{color:'#1daa6e'}}>&#8362; 329 remaining</span>
+              <span style={{color:'#9397b0'}}>&#8362; 900 budget</span>
+            </div>
           </div>
 
           <div style={{fontSize:16,fontWeight:800,marginBottom:12}}>August spending history</div>
           <div style={{background:'linear-gradient(90deg,#eff4ff,#f5f0ff)',border:'1px solid #dde3f5',borderRadius:14,padding:'14px 16px',marginBottom:14,display:'flex',justifyContent:'space-between'}}>
-            {([['16','Meals ordered','#2563eb'],['571','Total spent','#e03151'],['35.7','Avg per meal','#1daa6e']] as string[][]).map(([val,label,color],i)=>(
+            {[{val:'16',label:'Meals ordered',color:'#2563eb'},{val:'571',label:'Total spent',color:'#e03151'},{val:'35.7',label:'Avg per meal',color:'#1daa6e'}].map((s,i)=>(
               <div key={i} style={{textAlign:'center'}}>
-                <div style={{fontWeight:900,fontSize:20,color}}>{i>0?'&#8362; ':''}{val}</div>
-                <div style={{fontSize:11,color:'#9397b0',fontWeight:600,marginTop:2}}>{label}</div>
+              <div style={{fontWeight:900,fontSize:20,color:s.color}}>{i>0?'\u20AA ':''}{s.val}</div>
+                <div style={{fontSize:11,color:'#9397b0',fontWeight:600,marginTop:2}}>{s.label}</div>
               </div>
             ))}
           </div>
 
           <div style={{background:'#fff',border:'1px solid #dde3f5',borderRadius:18,padding:'18px 18px 4px',boxShadow:'0 2px 16px rgba(37,99,235,0.08)'}}>
-            {([['🍕','Pizza Hut','Aug 1, Wednesday','45',false],['🍣','Sushi Bar','Aug 2, Thursday','88',true],['🥗','Green Bowl','Jul 31, Tuesday','32',false],['🍔','Burger Brothers','Jul 30, Monday','55',false],['🌮','Taco House','Jul 29, Sunday','41',false],['🍜','Noodle Bar','Jul 28, Thursday','38',false],['🥙','Shawarma King','Jul 27, Wednesday','29',false]] as [string,string,string,string,boolean][]).map(([icon,name,date,amount,big],i,arr)=>(
-              <div key={i} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 0',borderBottom:i<arr.length-1?'1px solid #dde3f5':'none'}}>
+            {meals.map((m,i)=>(
+              <div key={i} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 0',borderBottom:i<meals.length-1?'1px solid #dde3f5':'none'}}>
                 <div style={{display:'flex',alignItems:'center',gap:12}}>
-                  <div style={{width:40,height:40,borderRadius:12,background:'#eff4ff',border:'1px solid #dde3f5',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18}}>{icon}</div>
+                  <div style={{width:40,height:40,borderRadius:12,background:'#eff4ff',border:'1px solid #dde3f5',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18}}>{m.icon}</div>
                   <div>
-                    <div style={{fontSize:14,fontWeight:700}}>{name}</div>
-                    <div style={{fontSize:11,color:'#9397b0',marginTop:2}}>{date}</div>
+                    <div style={{fontSize:14,fontWeight:700}}>{m.name}</div>
+                    <div style={{fontSize:11,color:'#9397b0',marginTop:2}}>{m.date}</div>
                   </div>
                 </div>
-                <div style={{fontWeight:900,fontSize:16,color:big?'#e03151':'#1a1d2e'}}>&#8362; {amount}</div>
+                <div style={{fontWeight:900,fontSize:16,color:m.big?'#e03151':'#1a1d2e'}}>&#8362; {m.amount}</div>
               </div>
             ))}
           </div>
@@ -128,10 +156,10 @@ export default function Home() {
           </div>
           <div style={{background:'#fff',border:'1px solid #dde3f5',borderRadius:18,padding:18,marginBottom:14}}>
             <h3 style={{fontSize:16,fontWeight:700,marginBottom:14}}>Budget</h3>
-            {([['Monthly Budget','900'],['Daily Limit','90'],['Reset Day (1-31)','17']] as string[][]).map(([label,val],i)=>(
+            {[{label:'Monthly Budget',val:'900'},{label:'Daily Limit',val:'90'},{label:'Reset Day (1-31)',val:'17'}].map((f,i)=>(
               <div key={i} style={{marginBottom:i<2?14:0}}>
-                <label style={{display:'block',fontSize:11,fontWeight:700,color:'#4a4f6a',marginBottom:5,textTransform:'uppercase',letterSpacing:'0.06em'}}>{label}</label>
-                <input defaultValue={val} type="number" style={{width:'100%',background:'#f0f4ff',border:'1.5px solid #dde3f5',borderRadius:12,fontSize:15,padding:'13px 14px',outline:'none'}}/>
+                <label style={{display:'block',fontSize:11,fontWeight:700,color:'#4a4f6a',marginBottom:5,textTransform:'uppercase',letterSpacing:'0.06em'}}>{f.label}</label>
+                <input defaultValue={f.val} type="number" style={{width:'100%',background:'#f0f4ff',border:'1.5px solid #dde3f5',borderRadius:12,fontSize:15,padding:'13px 14px',outline:'none'}}/>
               </div>
             ))}
           </div>
@@ -139,7 +167,9 @@ export default function Home() {
             <h3 style={{fontSize:16,fontWeight:700,marginBottom:14}}>Notifications</h3>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
               <span style={{fontSize:14}}>Enable reminders</span>
-              <div style={{width:48,height:26,background:'#2563eb',borderRadius:99,position:'relative',cursor:'pointer'}}><div style={{position:'absolute',width:20,height:20,background:'#fff',borderRadius:'50%',top:3,right:3,boxShadow:'0 1px 4px rgba(0,0,0,0.2)'}}></div></div>
+              <div style={{width:48,height:26,background:'#2563eb',borderRadius:99,position:'relative',cursor:'pointer'}}>
+                <div style={{position:'absolute',width:20,height:20,background:'#fff',borderRadius:'50%',top:3,right:3,boxShadow:'0 1px 4px rgba(0,0,0,0.2)'}}></div>
+              </div>
             </div>
             <label style={{display:'block',fontSize:11,fontWeight:700,color:'#4a4f6a',marginBottom:5,textTransform:'uppercase',letterSpacing:'0.06em'}}>Remind me at</label>
             <input type="time" defaultValue="20:00" style={{width:'100%',background:'#f0f4ff',border:'1.5px solid #dde3f5',borderRadius:12,fontSize:15,padding:'13px 14px',outline:'none'}}/>
@@ -154,14 +184,23 @@ export default function Home() {
           <p style={{fontSize:13,color:'#9397b0',marginBottom:18}}>What Rami sees on his phone at 20:00</p>
           <div style={{background:'linear-gradient(160deg,#e8f0fe 0%,#ede9fe 50%,#fce7f3 100%)',borderRadius:18,padding:'22px 18px 18px',marginBottom:14,border:'1px solid #dde3f5'}}>
             <div style={{display:'flex',justifyContent:'space-between',marginBottom:24}}>
-              <div><div style={{fontWeight:900,fontSize:56,lineHeight:1}}>20:00</div><div style={{fontSize:14,fontWeight:600,color:'#4a4f6a',marginTop:4}}>Wednesday, Aug 2</div></div>
+              <div>
+                <div style={{fontWeight:900,fontSize:56,lineHeight:1}}>20:00</div>
+                <div style={{fontSize:14,fontWeight:600,color:'#4a4f6a',marginTop:4}}>Wednesday, Aug 2</div>
+              </div>
               <div style={{fontSize:12,color:'#4a4f6a',textAlign:'right'}}>WiFi<br/>84%</div>
             </div>
             <div style={{background:'rgba(255,255,255,0.88)',borderRadius:16,padding:14,display:'flex',gap:12}}>
               <div style={{width:42,height:42,background:'linear-gradient(135deg,#2563eb,#818cf8)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:900,fontSize:13,color:'#fff',flexShrink:0}}>FT</div>
               <div style={{flex:1}}>
-                <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}><span style={{fontSize:12,fontWeight:800}}>FoodTrack</span><span style={{fontSize:11,color:'#9397b0'}}>now</span></div>
-                <div style={{fontSize:13,color:'#4a4f6a',lineHeight:1.5}}>Rami, you must spend <strong style={{color:'#e03151'}}>&#8362; 90</strong> on your Cibus card today — or it will be lost!<span style={{display:'block',marginTop:3,color:'#9397b0',fontSize:11}}>Balance: &#8362; 329 · Resets Aug 17</span></div>
+                <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}>
+                  <span style={{fontSize:12,fontWeight:800}}>FoodTrack</span>
+                  <span style={{fontSize:11,color:'#9397b0'}}>now</span>
+                </div>
+                <div style={{fontSize:13,color:'#4a4f6a',lineHeight:1.5}}>
+                  Rami, you must spend <strong style={{color:'#e03151'}}>&#8362; 90</strong> on your Cibus card today or it will be lost!
+                  <span style={{display:'block',marginTop:3,color:'#9397b0',fontSize:11}}>Balance: &#8362; 329 · Resets Aug 17</span>
+                </div>
                 <div style={{display:'flex',gap:8,marginTop:10}}>
                   <button style={{flex:1,padding:8,borderRadius:8,fontSize:12,fontWeight:700,border:'none',background:'#f0f2f8',cursor:'pointer'}}>Dismiss</button>
                   <button style={{flex:1,padding:8,borderRadius:8,fontSize:12,fontWeight:700,border:'none',background:'#2563eb',color:'#fff',cursor:'pointer'}}>Order Now</button>
@@ -171,20 +210,25 @@ export default function Home() {
           </div>
           <div style={{fontSize:12,fontWeight:800,color:'#9397b0',textTransform:'uppercase',letterSpacing:'0.07em',margin:'16px 0 10px'}}>When no action is needed</div>
           <div style={{background:'#edfaf4',border:'1.5px solid #b5ecd5',borderRadius:18,padding:18,display:'flex',alignItems:'center',gap:14}}>
-            <div style={{fontSize:28,flexShrink:0}}>✓</div>
-            <p style={{fontSize:13,color:'#4a4f6a',lineHeight:1.6}}><strong style={{color:'#1daa6e'}}>You are all good today!</strong><br/>No action needed — you will not lose any money.</p>
+            <div style={{fontSize:28,flexShrink:0}}>&#10003;</div>
+            <p style={{fontSize:13,color:'#4a4f6a',lineHeight:1.6}}>
+              <strong style={{color:'#1daa6e'}}>You are all good today!</strong><br/>
+              No action needed — you will not lose any money.
+            </p>
           </div>
         </div>
       )}
 
       <nav style={{position:'fixed',bottom:0,left:'50%',transform:'translateX(-50%)',width:'100%',maxWidth:430,background:'#fff',borderTop:'1px solid #dde3f5',height:70,display:'flex',alignItems:'center',justifyContent:'space-around',zIndex:100,boxShadow:'0 -4px 20px rgba(37,99,235,0.07)'}}>
-        {([['dashboard','Dashboard','M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z'],['settings','Settings','M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z'],['alerts','Alerts','M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0']] as string[][]).map(([tab,label,path])=>(
-          <button key={tab} onClick={()=>setActiveTab(tab)} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:4,padding:'8px 20px',border:'none',background:'transparent',cursor:'pointer',color:activeTab===tab?'#2563eb':'#9397b0'}}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={path}/></svg>
-            <span style={{fontSize:11,fontWeight:700}}>{label}</span>
+        {tabs.map((t)=>(
+          <button key={t.id} onClick={()=>setActiveTab(t.id)} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:4,padding:'8px 20px',border:'none',background:'transparent',cursor:'pointer',color:activeTab===t.id?'#2563eb':'#9397b0'}}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d={t.path}/>
+            </svg>
+            <span style={{fontSize:11,fontWeight:700}}>{t.label}</span>
           </button>
         ))}
       </nav>
     </div>
   );
-};
+}
